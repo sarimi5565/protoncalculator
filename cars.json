@@ -1,47 +1,130 @@
 [
   {
-    "name": "Saga Standard",
+    "category": "PROTON SAGA",
+    "variant": "1.5 Standard 4AT",
+    "priceWithoutInsurance": 38990,
+    "estimatedInsurance": 1455,
     "price": 40445,
-    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+    "colors": ["M.Blue", "Silver", "R.Red", "S.Grey", "White"]
   },
   {
-    "name": "Saga Executive",
+    "category": "PROTON SAGA",
+    "variant": "1.5 Executive 4AT",
+    "priceWithoutInsurance": 44990,
+    "estimatedInsurance": 1616,
     "price": 46606,
-    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+    "colors": ["M.Blue", "Silver", "R.Red", "S.Grey", "White"]
   },
   {
-    "name": "Saga Premium",
+    "category": "PROTON SAGA",
+    "variant": "1.5 Premium CVT",
+    "priceWithoutInsurance": 49990,
+    "estimatedInsurance": 1790,
     "price": 51780,
-    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+    "colors": ["M.Blue", "Silver", "R.Red", "S.Grey", "White"]
   },
   {
-    "name": "S70 Lite",
-    "price": 60334,
-    "colors": ["Black", "Blue", "Silver"]
+    "category": "PROTON S70 MC2",
+    "variant": "1.5 Lite NA+CVT",
+    "priceWithoutInsurance": 58300,
+    "estimatedInsurance": 2034.3,
+    "price": 60334.3,
+    "colors": ["Q.Black", "M.Blue", "Silver", "S.Grey", "White"]
   },
   {
-    "name": "S70 Prime",
-    "price": 63412,
-    "colors": ["Black", "Blue", "Silver"]
+    "category": "PROTON S70 MC2",
+    "variant": "1.5 Prime NA+CVT",
+    "priceWithoutInsurance": 61300,
+    "estimatedInsurance": 2112.3,
+    "price": 63412.3,
+    "colors": ["Q.Black", "M.Blue", "Silver", "S.Grey", "White"]
   },
   {
-    "name": "X50 Executive",
-    "price": 92899,
-    "colors": ["Green", "Silver", "Grey"]
+    "category": "PROTON S70 MC1",
+    "variant": "1.5TD i-GT Premium DCT",
+    "priceWithoutInsurance": 79800,
+    "estimatedInsurance": 2907.56,
+    "price": 82707.56,
+    "colors": ["S.Grey", "Q.Black", "M.Blue", "Silver", "White"]
   },
   {
-    "name": "X50 Premium",
-    "price": 105141,
-    "colors": ["Green", "Silver", "Grey"]
+    "category": "PROTON S70 MC1",
+    "variant": "1.5TD i-GT Flagship DCT",
+    "priceWithoutInsurance": 89800,
+    "estimatedInsurance": 3256.3,
+    "price": 93056.3,
+    "colors": ["S.Grey", "Q.Black", "M.Blue", "Silver", "White"]
   },
   {
-    "name": "X70 Premium",
+    "category": "PROTON S70 MC1",
+    "variant": "1.5TD i-GT Flagship X DCT",
+    "priceWithoutInsurance": 94800,
+    "estimatedInsurance": 3390.92,
+    "price": 98190.92,
+    "colors": ["S.Grey", "Q.Black", "M.Blue", "Silver", "White"]
+  },
+  {
+    "category": "PROTON X50",
+    "variant": "1.5TD Executive DCT 2WD",
+    "priceWithoutInsurance": 89800,
+    "estimatedInsurance": 3098.58,
+    "price": 92898.58,
+    "colors": ["Green", "Silver", "J.Grey", "White", "Q.Black"]
+  },
+  {
+    "category": "PROTON X50",
+    "variant": "1.5TD Premium DCT 2WD",
+    "priceWithoutInsurance": 101800,
+    "estimatedInsurance": 3340.89,
+    "price": 105140.89,
+    "colors": ["Green", "Silver", "J.Grey", "White", "Q.Black"]
+  },
+  {
+    "category": "PROTON X50",
+    "variant": "1.5TD Flagship DCT 2WD",
+    "priceWithoutInsurance": 113300,
+    "estimatedInsurance": 3637.06,
+    "price": 116937.06,
+    "colors": ["Green", "Silver", "J.Grey", "White", "Q.Black"]
+  },
+  {
+    "category": "PROTON X70",
+    "variant": "1.5TD Executive DCT 2WD",
+    "priceWithoutInsurance": 106800,
+    "estimatedInsurance": 3662.7,
+    "price": 110462.7,
+    "colors": ["Silver", "J.Grey", "White", "M.Blue"]
+  },
+  {
+    "category": "PROTON X70",
+    "variant": "1.5TD Premium DCT 2WD",
+    "priceWithoutInsurance": 119800,
+    "estimatedInsurance": 4012,
     "price": 123812,
-    "colors": ["Silver", "Grey", "Blue"]
+    "colors": ["Silver", "J.Grey", "White", "M.Blue"]
   },
   {
-    "name": "X90 Prime X",
-    "price": 127458,
-    "colors": ["Grey", "White", "Blue"]
+    "category": "PROTON X90",
+    "variant": "1.5TD Lite DCT 2WD",
+    "priceWithoutInsurance": 106800,
+    "estimatedInsurance": 4092.22,
+    "price": 110892.22,
+    "colors": ["J.Grey", "White", "M.Blue", "Q.Black", "Silver"]
+  },
+  {
+    "category": "PROTON X90",
+    "variant": "1.5TD Prime DCT 2WD",
+    "priceWithoutInsurance": 116800,
+    "estimatedInsurance": 4280.69,
+    "price": 121080.69,
+    "colors": ["J.Grey", "White", "M.Blue", "Q.Black", "Silver"]
+  },
+  {
+    "category": "PROTON X90",
+    "variant": "1.5TD Prime X DCT 2WD",
+    "priceWithoutInsurance": 122800,
+    "estimatedInsurance": 4657.62,
+    "price": 127457.62,
+    "colors": ["J.Grey", "White", "M.Blue", "Q.Black", "Silver"]
   }
 ]

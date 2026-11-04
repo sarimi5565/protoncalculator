@@ -3,6 +3,13 @@ let chart;
 
 const model = document.getElementById('model');
 
+function formatRM(amount) {
+  return `RM ${Number(amount).toLocaleString('ms-MY', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })}`;
+}
+
 async function initialize() {
   try {
     const response = await fetch('cars.json');
@@ -27,7 +34,7 @@ function populateModels() {
   cars.forEach((car, index) => {
     const option = document.createElement('option');
     option.value = index;
-    option.textContent = car.name;
+    option.textContent = `${car.category} — ${car.variant}`;
     model.appendChild(option);
   });
 }
@@ -92,10 +99,10 @@ function calculate() {
   const loan = Math.max(0, car.price - deposit - tradein - rebate);
   const monthly = payment(loan, rate, years * 12);
 
-  document.getElementById('otr').textContent = `RM ${car.price.toLocaleString()}`;
-  document.getElementById('dep').textContent = `RM ${deposit.toFixed(0)}`;
-  document.getElementById('loan').textContent = `RM ${loan.toFixed(0)}`;
-  document.getElementById('monthly').textContent = `RM ${monthly.toFixed(0)}`;
+  document.getElementById('otr').textContent = formatRM(car.price);
+  document.getElementById('dep').textContent = formatRM(deposit);
+  document.getElementById('loan').textContent = formatRM(loan);
+  document.getElementById('monthly').textContent = formatRM(monthly);
 
   chart.data.datasets[0].data = [
     payment(loan, rate, 60).toFixed(0),
@@ -107,24 +114,30 @@ function calculate() {
   const bank = document.getElementById('bank');
   const bankName = bank.options[bank.selectedIndex].text;
   const customerName = document.getElementById('custName').value || '-';
+  const selectedColour = document.getElementById('colour').value;
 
   document.getElementById('quoteText').textContent =
     `Pelanggan :\n${customerName}\n\n` +
-    `Model :\n${car.name}\n\n` +
-    `Harga :\nRM ${car.price.toLocaleString()}\n\n` +
-    `Deposit :\nRM ${deposit.toFixed(0)}\n\n` +
-    `Pinjaman :\nRM ${loan.toFixed(0)}\n\n` +
-    `Ansuran :\nRM ${monthly.toFixed(0)} / bulan\n\n` +
+    `Model :\n${car.category}\n\n` +
+    `Varian :\n${car.variant}\n\n` +
+    `Warna :\n${selectedColour}\n\n` +
+    `Harga tanpa insurans :\n${formatRM(car.priceWithoutInsurance)}\n\n` +
+    `Anggaran insurans :\n${formatRM(car.estimatedInsurance)}\n\n` +
+    `Harga OTR (termasuk anggaran insurans) :\n${formatRM(car.price)}\n\n` +
+    `Deposit :\n${formatRM(deposit)}\n\n` +
+    `Pinjaman :\n${formatRM(loan)}\n\n` +
+    `Ansuran :\n${formatRM(monthly)} / bulan\n\n` +
     `Tempoh :\n${years} Tahun\n\n` +
     `Bank :\n${bankName}`;
 }
 
 function saveCustomer() {
   const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+  const car = cars[Number(model.value)];
   customers.push({
     name: document.getElementById('custName').value,
     phone: document.getElementById('custPhone').value,
-    model: cars[Number(model.value)].name
+    model: `${car.category} ${car.variant}`
   });
 
   localStorage.setItem('customers', JSON.stringify(customers));
