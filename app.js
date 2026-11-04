@@ -99,6 +99,8 @@ function calculate() {
   const loan = Math.max(0, car.price - deposit - tradein - rebate);
   const monthly = payment(loan, rate, years * 12);
 
+  document.getElementById('otrWithoutInsurance').textContent = formatRM(car.priceWithoutInsurance);
+  document.getElementById('estimatedInsurance').textContent = formatRM(car.estimatedInsurance);
   document.getElementById('otr').textContent = formatRM(car.price);
   document.getElementById('dep').textContent = formatRM(deposit);
   document.getElementById('loan').textContent = formatRM(loan);
