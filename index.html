@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Proton Sales Dashboard V2</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+:root{
+ --bg:#f5f6fa;
+ --card:#ffffff;
+ --text:#222;
+ --primary:#0066ff;
+ --shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.dark{
+ --bg:#111827;
+ --card:#1f2937;
+ --text:#fff;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:Segoe UI,sans-serif;
+}
+
+body{
+ background:var(--bg);
+ color:var(--text);
+ padding:20px;
+}
+
+.header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:20px;
+}
+
+.card{
+ background:var(--card);
+ padding:20px;
+ border-radius:15px;
+ box-shadow:var(--shadow);
+ margin-bottom:20px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:350px 1fr;
+ gap:20px;
+}
+
+.form-group{
+ margin-bottom:12px;
+}
+
+label{
+ display:block;
+ margin-bottom:5px;
+ font-weight:600;
+}
+
+input,select{
+ width:100%;
+ padding:10px;
+ border:1px solid #ccc;
+ border-radius:8px;
+}
+
+.kpi{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:15px;
+ margin-bottom:20px;
+}
+
+.kpi-card{
+ background:var(--card);
+ border-radius:15px;
+ padding:20px;
+ box-shadow:var(--shadow);
+}
+
+.kpi-title{
+ font-size:13px;
+ opacity:.7;
+}
+
+.kpi-value{
+ font-size:24px;
+ font-weight:bold;
+ margin-top:8px;
+}
+
+button{
+ border:none;
+ background:#0066ff;
+ color:white;
+ padding:10px 15px;
+ border-radius:10px;
+ cursor:pointer;
+}
+
+.quote{
+ line-height:2;
+}
+
+@media(max-width:900px){
+ .grid{
+  grid-template-columns:1fr;
+ }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+ <h1>🚗 Proton Dashboard V2</h1>
+ <button onclick="toggleTheme()">Dark Mode</button>
+</div>
+
+<div class="grid">
+
+<div>
+
+<div class="card">
+
+<h3>Pelanggan</h3>
+
+<div class="form-group">
+<label>Nama</label>
+<input id="custName">
+</div>
+
+<div class="form-group">
+<label>Telefon</label>
+<input id="custPhone">
+</div>
+
+<button onclick="saveCustomer()">
+Simpan Pelanggan
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Pembiayaan</h3>
+
+<div class="form-group">
+<label>Model</label>
+<select id="model"></select>
+</div>
+
+<div class="form-group">
+<label>Warna</label>
+<select id="colour"></select>
+</div>
+
+<div class="form-group">
+<label>Deposit (%)</label>
+<input type="range" min="0" max="30" value="10" id="depositPct">
+<span id="depositLabel">10%</span>
+</div>
+
+<div class="form-group">
+<label>Trade-In (RM)</label>
+<input type="number" value="0" id="tradein">
+</div>
+
+<div class="form-group">
+<label>Rebat (RM)</label>
+<input type="number" value="0" id="rebate">
+</div>
+
+<div class="form-group">
+<label>Bank</label>
+<select id="bank">
+<option value="2.75">BSN</option>
+<option value="2.8">Maybank</option>
+<option value="2.85">CIMB</option>
+<option value="2.9">RHB</option>
+<option value="2.95">Bank Islam</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Tempoh (Tahun)</label>
+<select id="years">
+<option>5</option>
+<option>7</option>
+<option selected>9</option>
+</select>
+</div>
+
+<button onclick="calculate()">
+Kira Pembiayaan
+</button>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="kpi">
+
+<div class="kpi-card">
+<div class="kpi-title">Harga OTR</div>
+<div class="kpi-value" id="otr">RM0</div>
+</div>
+
+<div class="kpi-card">
+<div class="kpi-title">Deposit</div>
+<div class="kpi-value" id="dep">RM0</div>
+</div>
+
+<div class="kpi-card">
+<div class="kpi-title">Pinjaman</div>
+<div class="kpi-value" id="loan">RM0</div>
+</div>
+
+<div class="kpi-card">
+<div class="kpi-title">Ansuran</div>
+<div class="kpi-value" id="monthly">RM0</div>
+</div>
+
+</div>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+<div class="card quote" id="quotation">
+
+<h3>Quotation</h3>
+
+<p id="quoteText">
+Tiada data
+</p>
+
+<button onclick="window.print()">
+Cetak
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const cars = [
+
+{
+name:'Saga Standard',
+price:40445,
+colors:['Blue','Silver','Red','Grey','White']
+},
+
+{
+name:'Saga Executive',
+price:46606,
+colors:['Blue','Silver','Red','Grey','White']
+},
+
+{
+name:'Saga Premium',
+price:51780,
+colors:['Blue','Silver','Red','Grey','White']
+},
+
+{
+name:'S70 Lite',
+price:60334,
+colors:['Black','Blue','Silver']
+},
+
+{
+name:'S70 Prime',
+price:63412,
+colors:['Black','Blue','Silver']
+},
+
+{
+name:'X50 Executive',
+price:92899,
+colors:['Green','Silver','Grey']
+},
+
+{
+name:'X50 Premium',
+price:105141,
+colors:['Green','Silver','Grey']
+},
+
+{
+name:'X70 Premium',
+price:123812,
+colors:['Silver','Grey','Blue']
+},
+
+{
+name:'X90 Prime X',
+price:127458,
+colors:['Grey','White','Blue']
+}
+
+];
+
+let model=document.getElementById('model');
+
+cars.forEach((c,i)=>{
+ let op=document.createElement('option');
+ op.value=i;
+ op.textContent=c.name;
+ model.appendChild(op);
+});
+
+function loadColours(){
+
+let idx=model.value;
+
+let col=document.getElementById('colour');
+
+col.innerHTML='';
+
+cars[idx].colors.forEach(c=>{
+
+let op=document.createElement('option');
+op.textContent=c;
+
+col.appendChild(op);
+
+});
+
+}
+
+model.addEventListener('change',()=>{
+ loadColours();
+ calculate();
+});
+
+loadColours();
+
+document.getElementById('depositPct')
+.addEventListener('input',e=>{
+document.getElementById('depositLabel')
+.innerHTML=e.target.value+'%';
+calculate();
+});
+
+function payment(P,r,n){
+
+r=(r/100)/12;
+
+return P*r/
+(1-Math.pow(1+r,-n));
+
+}
+
+const chart =
+new Chart(
+document.getElementById('chart'),
+{
+type:'bar',
+data:{
+labels:[
+'5 Tahun',
+'7 Tahun',
+'9 Tahun'
+],
+datasets:[{
+label:'Ansuran',
+data:[0,0,0]
+}]
+}
+}
+);
+
+function calculate(){
+
+let c=cars[model.value];
+
+let depositPct=
+parseFloat(
+document.getElementById('depositPct').value
+);
+
+let tradein=
+parseFloat(
+document.getElementById('tradein').value||0
+);
+
+let rebate=
+parseFloat(
+document.getElementById('rebate').value||0
+);
+
+let years=
+parseInt(
+document.getElementById('years').value
+);
+
+let rate=
+parseFloat(
+document.getElementById('bank').value
+);
+
+let deposit=
+c.price*(depositPct/100);
+
+let loan=
+c.price-deposit-tradein-rebate;
+
+if(loan<0) loan=0;
+
+let monthly=
+payment(
+loan,
+rate,
+years*12
+);
+
+document.getElementById('otr')
+.innerHTML='RM '+c.price.toLocaleString();
+
+document.getElementById('dep')
+.innerHTML='RM '+deposit.toFixed(0);
+
+document.getElementById('loan')
+.innerHTML='RM '+loan.toFixed(0);
+
+document.getElementById('monthly')
+.innerHTML='RM '+monthly.toFixed(0);
+
+chart.data.datasets[0].data=[
+
+payment(loan,rate,60).toFixed(0),
+payment(loan,rate,84).toFixed(0),
+payment(loan,rate,108).toFixed(0)
+
+];
+
+chart.update();
+
+document.getElementById('quoteText')
+.innerHTML=`
+
+Pelanggan :
+${document.getElementById('custName').value || '-'}
+
+Model :
+${c.name}
+
+Harga :
+RM ${c.price.toLocaleString()}
+
+Deposit :
+RM ${deposit.toFixed(0)}
+
+Pinjaman :
+RM ${loan.toFixed(0)}
+
+Ansuran :
+RM ${monthly.toFixed(0)} / bulan
+
+Tempoh :
+${years} Tahun
+
+Bank :
+${document.getElementById('bank')
+.options[
+document.getElementById('bank')
+.selectedIndex
+].text}
+
+`;
+
+}
+
+function saveCustomer(){
+
+let customers=
+JSON.parse(
+localStorage.getItem(
+'customers'
+)||'[]'
+);
+
+customers.push({
+
+name:
+document
+.getElementById('custName')
+.value,
+
+phone:
+document
+.getElementById('custPhone')
+.value,
+
+model:
+cars[
+model.value
+].name
+
+});
+
+localStorage.setItem(
+'customers',
+JSON.stringify(customers)
+);
+
+alert('Pelanggan disimpan');
+
+}
+
+function toggleTheme(){
+
+document.body.classList.toggle('dark');
+
+}
+
+calculate();
+
+</script>
+
+</body>
+</html>
