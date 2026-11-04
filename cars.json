@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Saga Standard",
+    "price": 40445,
+    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+  },
+  {
+    "name": "Saga Executive",
+    "price": 46606,
+    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+  },
+  {
+    "name": "Saga Premium",
+    "price": 51780,
+    "colors": ["Blue", "Silver", "Red", "Grey", "White"]
+  },
+  {
+    "name": "S70 Lite",
+    "price": 60334,
+    "colors": ["Black", "Blue", "Silver"]
+  },
+  {
+    "name": "S70 Prime",
+    "price": 63412,
+    "colors": ["Black", "Blue", "Silver"]
+  },
+  {
+    "name": "X50 Executive",
+    "price": 92899,
+    "colors": ["Green", "Silver", "Grey"]
+  },
+  {
+    "name": "X50 Premium",
+    "price": 105141,
+    "colors": ["Green", "Silver", "Grey"]
+  },
+  {
+    "name": "X70 Premium",
+    "price": 123812,
+    "colors": ["Silver", "Grey", "Blue"]
+  },
+  {
+    "name": "X90 Prime X",
+    "price": 127458,
+    "colors": ["Grey", "White", "Blue"]
+  }
+]
